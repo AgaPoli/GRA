@@ -33,14 +33,14 @@ function validateUserName(name) {
   }
 }
 
-function startGame(startGameBtn) {
-
+function newGame(startGameBtn) {
   const name = getUserName();
   if (!validateUserName(name)) {
     alert("imie nie poprawne");
-    return;
 
+    return;
   }
+
   startGameBtn.classList.add("hidden");
   playerNameElement.innerHTML = name;
   playerPickElement.classList.remove("hidden");
@@ -53,4 +53,62 @@ const playerPickElement = document.getElementById("js-playerPickElement");
 const newGameButton = document.getElementById("js-newGameButton");
 const resultsTableElement = document.getElementById("js-resultsTableElement");
 
-newGameButton.addEventListener("click", event => startGame(event.target));
+newGameButton.addEventListener("click", event => newGame(event.target));
+//  4.logika gry ()
+// punktacja-zasady gry(wygrana 3 pkty, )
+
+playerPickElement.addEventListener("click", event => playerPick(event.target));
+
+function playerPick(target) {
+  //element to nasz target
+  const targetBtn = target.closest(".btn"); //jak naciskam na ikonke w przycisku to szuka najblizszego rodzica .btn;
+  const playerChoice = targetBtn.dataset.dupa; //ma byc na cala ikone nie tylko na nazwe(papier)ma byc kolko i znaczek
+  console.log(targetBtn, playerChoice, computerPick()); //playerChoice- wyswietli co wybral gracz
+  sedzia(playerChoice, computerPick());
+}
+
+function computerPick() {
+  //  const los = Math.floor(Math.random()*3);
+  //switch(los){
+  //case 0:
+  //return "Papier";
+
+  //case 1:
+  //return "Nozyce";
+
+  // case 2:
+  //return "Kamien";
+  // }
+
+  const options = ["papier", "nozyce", "kamien"];
+  return options[Math.floor(Math.random() * 3)];
+}
+
+const tablicaWynikow = {
+  liczbaGier: 0,
+  pktyGracza: 0,
+  pktyKomputera: 0
+};
+
+function sedzia(playerPick, computerPick) {
+  if (computerPick == playerPick) {
+    return 0; //remis
+  }
+
+  if (
+    (computerPick == "papier" && playerPick == "nozyce") ||
+    (computerPick == "kamien" && playerPick == "papier") ||
+    (computerPick == "nozyce" && playerPick == "kamien")
+  ) {
+    tablicaWynikow.pktyGracza++;
+  } else {
+    tablicaWynikow.pktyKomputera++;
+  }
+
+  tablicaWynikow.liczbaGier++;
+
+  console.log(tablicaWynikow);
+
+  //  computer win
+  //  playerPick =='kamien'
+}
