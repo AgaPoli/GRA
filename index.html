@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!--Dołączenie zewnętrznych arkuszy stylów-->
+	<meta charset="UTF-8">
+	<title>My first game in JavaScript</title>
+	<link href="css/style.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<!--Tytuł gry-->
+	<div class="container">
+		<h3 class="text-center">Witaj w grze <span class="label label-info">Kamien</span> <span
+				class="label label-warning">Papier</span> <span class="label label-danger">Nozyce</span></h3>
+	</div>
+	<!--Przycisk zainicjowania nowej gry-->
+	<div class="container" id="js-newGameElement">
+		<!--id calego elementu przycisku bo ma znikac w czasie gry-->
+		<div class="row text-center">
+			<button class="btn btn-outline-secondary" id="js-newGameButton">Nowa gra</button>
+			<!--id boma byc zdarzenie click -->
+		</div>
+	</div>
+	<!--Wybór gracza-->
+	<div class="container hidden" id="js-playerPickElement">
+		<div class="row text-center">
+			<button class="btn" id="s-playerPick_paper"><span class="badge badge-pill badge-secondary"><i aria-hidden="true"
+						class="fa fa-paper-plane-o"></i></span>Papier</button>
+			<button class="btn" id="js-playerPick_scissors"><span class="badge badge-pill badge-secondary"><i
+						aria-hidden="true" class="fa fa-scissors"></i></span>Nozyce</button>
+			<button class="btn" id="js-playerPick_rock"><span class="badge badge-pill badge-secondary"><i aria-hidden="true"
+						class="fa fa-hand-rock-o"></i></span>Kamien</button>
+		</div>
+	</div>
+	<!--wynik-->
+	<div class="container hidden" id="js-resultsTableElement">
+		<div class="row">
+			<div class="col-xs-5 text-center">
+				<!--pkt gracza-->
+				<span class="badge" id="js-playerPoints">0</span><span id="js-playerName"> Gracz</span>
+			</div>
+			<div class="col-xs-2 text-center">
+				Kontra
+			</div>
+			<div class="col-xs-5 text-center">
+				<!--pkt komputera-->
+				<span class="badge" id=>0</span> Komputer
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-5 text-center"><span id=>
+					Wybor Gracza </span>
+			</div>
+			<div class="col-xs-2 text-center"></div>
+			<div class="col-xs-5 text-center"><span id=>
+					Wybor Komputera</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-5 text-center"><span id=>
+					Punkt</span></span>
+			</div>
+			<div class="col-xs-2 text-center"></div>
+			<div class="col-xs-5 text-center"><span id=>
+					Punkt</span>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script src="script.js" type="text/javascript">
+	</script>
+	</div>
+</body>
+
+</html>
+
+.don
+ul>li
