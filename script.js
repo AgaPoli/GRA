@@ -2,6 +2,7 @@
 const playerNameElement = document.getElementById("js-playerName");
 const playerPickElement = document.getElementById("js-playerPickElement");
 const newGameButton = document.getElementById("js-newGameButton");
+const startGameBtn = document.getElementById("js-startGameBtn");
 const resultsTableElement = document.getElementById("js-resultsTableElement");
 const playerPoints = document.getElementById("js-playerPoints");
 const computerPoints = document.getElementById("js-computerPoints");
@@ -9,6 +10,9 @@ const playerChoice = document.getElementById("js-playerPick");
 const computerChoice = document.getElementById("js-computerPick");
 const playerPoint = document.getElementById("js-playerPoint");
 const computerPoint = document.getElementById("js-computerPoint");
+// Modal
+const usernameElement = document.getElementById("js-username");
+const numberOfGamesElement = document.getElementById("js-numberOfGames");
 
 let tablicaWynikow = {
   liczbaGier: 0,
@@ -20,15 +24,18 @@ const zasadyGry = {
   liczbaGier: 3
 };
 
+let przebiegRozgrywek = [];
+
 // wyskakuje okienko, pytanie o imie
 function getUserName() {
-  return prompt(
-    `Please enter your name
-  name can't be null
-  name nact be number
-  min 3 dig`,
-    `Agaa`
-  );
+  return usernameElement.value;
+  // return prompt(
+  //   `Please enter your name
+  // name can't be null
+  // name nact be number
+  // min 3 dig`,
+  //   `Agaa`
+  // );
 }
 
 // waldacja imienia(ile liter, cyfry, anuluj)
@@ -57,23 +64,27 @@ function newGame() {
     return;
   }
 
+  $("#myModal").modal("hide");
+  zasadyGry.liczbaGier = numberOfGamesElement.value;
   newGameButton.classList.add("hidden");
   playerNameElement.innerHTML = name;
   playerPickElement.classList.remove("hidden");
   resultsTableElement.classList.remove("hidden");
 }
 
-newGameButton.addEventListener("click", event => newGame());
+startGameBtn.addEventListener("click", event => newGame());
 //  4.logika gry ()
 // punktacja-zasady gry(wygrana 3 pkty, )
 
-playerPickElement.addEventListener("click", event => playerPick(event.target));
+playerPickElement.addEventListener("click", event =>
+  playerChoose(event.target)
+);
 
-function playerPick(target) {
+function playerChoose(target) {
   //element to nasz target
   const targetBtn = target.closest(".btn"); //jak naciskam na ikonke w przycisku to szuka najblizszego rodzica .btn;
   const playerChoice = targetBtn.dataset.dupa; //ma byc na cala ikone nie tylko na nazwe(papier)ma byc kolko i znaczek
-  // console.log(targetBtn, playerChoice, computerPick()); //playerChoice- wyswietli co wybral gracz
+  // console.log(targetBtn, typeof playerChoice, typeof computerPick()); //playerChoice- wyswietli co wybral gracz
   sedzia(playerChoice, computerPick());
 }
 
@@ -98,33 +109,53 @@ function sedzia(playerPick, computerPick) {
   if (computerPick == playerPick) {
     return 0; //remis
   }
-
+  let winner = "";
   if (
     (computerPick == "papier" && playerPick == "nozyce") ||
     (computerPick == "kamien" && playerPick == "papier") ||
     (computerPick == "nozyce" && playerPick == "kamien")
   ) {
     tablicaWynikow.pktyGracza++;
-    result("player");
+    winner = "player";
   } else {
     tablicaWynikow.pktyKomputera++;
-    result("computer");
+    winner = "computer";
   }
+  result(winner);
 
   //  wybor gracza i kompa ma nbyc pap, noz lub kamien js-playerPick
   playerChoice.innerHTML = playerPick;
   computerChoice.innerHTML = computerPick;
 
   tablicaWynikow.liczbaGier++;
-  if (tablicaWynikow.pktyGracza >= 3 || tablicaWynikow.pktyKomputera >= 3) {
+
+  przebiegRundy = {
+    pktyGracza: tablicaWynikow.pktyGracza,
+    pktyKomputera: tablicaWynikow.pktyKomputera,
+    ruchGracza: playerPick.toString(),
+    ruchKomputera: computerPick.toString(),
+    wygrał: winner
+  };
+
+  przebiegRozgrywek.push(przebiegRundy); // dodawanie elementu na koniec tablicy
+
+  console.table(przebiegRozgrywek);
+
+  if (
+    tablicaWynikow.pktyGracza >= zasadyGry.liczbaGier ||
+    tablicaWynikow.pktyKomputera >= zasadyGry.liczbaGier
+  ) {
+    $('#resultModal').modal('show');
     endGame();
   }
 }
 
 function result(winner, reset = false) {
   //  w koleczku przy imieniu ma byc liczba pktow js-playerPoints
-  playerPoints.innerHTML = reset ? '0' : tablicaWynikow.pktyGracza.toString(); //piszzemy to String bo plty sa w liczbach a innerHtml to string
-  computerPoints.innerHTML = reset ? '0' : tablicaWynikow.pktyKomputera.toString();
+  playerPoints.innerHTML = reset ? "0" : tablicaWynikow.pktyGracza.toString(); //piszzemy to String bo plty sa w liczbach a innerHtml to string
+  computerPoints.innerHTML = reset
+    ? "0"
+    : tablicaWynikow.pktyKomputera.toString();
 
   playerPoint.innerHTML =
     winner == "player" ? '<i class="fa fa-trophy"></i>' : "";
@@ -147,14 +178,16 @@ function endGame() {
   playerNameElement.innerHTML = "PlayerName";
   playerPickElement.classList.add("hidden");
   resultsTableElement.classList.add("hidden");
-  
-  result('', true);
-  
+  playerChoice.innerHTML = "";
+  computerChoice.innerHTML = "";
+  result("", true);
+
+  przebiegRozgrywek = [];
+
   tablicaWynikow = {
     liczbaGier: 0,
     pktyGracza: 0,
     pktyKomputera: 0
   };
 }
-
 //zasady gry (koniec gry gdy wygrany ma 3 pkty, )

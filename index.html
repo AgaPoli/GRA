@@ -8,6 +8,11 @@
 	<link href="css/style.css" rel="stylesheet">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -20,7 +25,7 @@
 	<div class="container" id="js-newGameElement">
 		<!--id calego elementu przycisku bo ma znikac w czasie gry-->
 		<div class="row text-center">
-			<button class="btn btn-outline-secondary" id="js-newGameButton">Nowa gra</button>
+			<button class="btn btn-outline-secondary" id="js-newGameButton" data-toggle="modal" data-target="#myModal">Nowa gra</button>
 			<!--id boma byc zdarzenie click -->
 		</div>
 	</div>
@@ -70,9 +75,94 @@
 			<div class="col-xs-5 text-center"><span  id="js-computerPoint">
 					Punkt</span>
 			</div>
-		</div>
+		</div> 
 	</div>
 
+  <!-- Modal -->
+  <div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+		  <h4 class="modal-title" id="myModalLabel">Wyniki</h4>
+		
+		</div>
+		<div class="modal-body">
+			
+			<table class="table table-striped">
+				<thead>
+				  <tr>
+					<th>#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Username</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+					<th scope="row">1</th>
+					<td>Mark</td>
+					<td>Otto</td>
+					<td>@mdo</td>
+				  </tr>
+				  <tr>
+					<th scope="row">2</th>
+					<td>Jacob</td>
+					<td>Thornton</td>
+					<td>@fat</td>
+				  </tr>
+				  <tr>
+					<th scope="row">3</th>
+					<td>Larry</td>
+					<td>the Bird</td>
+					<td>@twitter</td>
+				  </tr>
+				</tbody>
+			  </table>
+
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+		  <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+		
+		</div>
+		<div class="modal-body">
+			<p>Please enter your name
+			name can't be null
+			name nact be number
+			min 3 dig</p>
+			<div class="form-group">
+				<label for="name">Podaj imie</label>
+				<input required type="text" class="form-control" id="js-username" placeholder="Imie" value="Agaa">
+			</div>
+			
+			<div class="form-group">
+				<label for="numberOfGames">Liczba gier</label>
+				<input required type="number" step="1" class="form-control" id="js-numberOfGames" placeholder="Liczba gier" value="3">
+			</div>
+		
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		  <button type="button" id="js-startGameBtn" class="btn btn-primary">Rozpocznij gre</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+	  
 	<script src="script.js" type="text/javascript">
 	</script>
 	</div>
