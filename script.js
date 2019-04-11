@@ -13,6 +13,8 @@ const computerPoint = document.getElementById("js-computerPoint");
 // Modal
 const usernameElement = document.getElementById("js-username");
 const numberOfGamesElement = document.getElementById("js-numberOfGames");
+// Results Table
+const resultsTableBodyElement = document.getElementById("js-resultsTableBody");
 
 let tablicaWynikow = {
   liczbaGier: 0,
@@ -129,7 +131,7 @@ function sedzia(playerPick, computerPick) {
 
   tablicaWynikow.liczbaGier++;
 
-  przebiegRundy = {
+  const przebiegRundy = {
     pktyGracza: tablicaWynikow.pktyGracza,
     pktyKomputera: tablicaWynikow.pktyKomputera,
     ruchGracza: playerPick.toString(),
@@ -137,16 +139,26 @@ function sedzia(playerPick, computerPick) {
     wygrał: winner
   };
 
+  // Refaktor
+  // https://developer.mozilla.org/pl/docs/Web/JavaScript/Referencje/Obiekty/Array/forEach
+  // wykożystaj tablicę 'przebiegRozgrywek' która trzyma wyniki i wstaw je do elementu w HTML o id='js-resultsTableBody'
+
   przebiegRozgrywek.push(przebiegRundy); // dodawanie elementu na koniec tablicy
 
-  console.table(przebiegRozgrywek);
+  showResult(przebiegRundy);
+  // console.table(przebiegRozgrywek);
+  console.log(tablicaWynikow.liczbaGier)
+  
+  przebiegRozgrywek.forEach(element => {
+    console.log(element);
+  });
 
   if (
     tablicaWynikow.pktyGracza >= zasadyGry.liczbaGier ||
     tablicaWynikow.pktyKomputera >= zasadyGry.liczbaGier
   ) {
-    $('#resultModal').modal('show');
-    endGame();
+    $("#resultModal").modal("show");
+    // endGame();
   }
 }
 
@@ -183,6 +195,7 @@ function endGame() {
   result("", true);
 
   przebiegRozgrywek = [];
+  resultsTableBodyElement.innerHTML = "";
 
   tablicaWynikow = {
     liczbaGier: 0,
@@ -190,4 +203,21 @@ function endGame() {
     pktyKomputera: 0
   };
 }
+
 //zasady gry (koniec gry gdy wygrany ma 3 pkty, )
+function showResult(przebiegRundy) {
+  const row = `
+    <tr>
+      <th scope="row">${tablicaWynikow.liczbaGier}</th>
+      <td>${przebiegRundy.pktyGracza}</td>
+      <td>${przebiegRundy.pktyKomputera}</td>
+      <td>${przebiegRundy.ruchGracza}</td>
+      <td>${przebiegRundy.ruchKomputera}</td>
+      <td>${przebiegRundy.wygrał}</td>
+    </tr>
+  `;
+
+  resultsTableBodyElement.innerHTML = resultsTableBodyElement.innerHTML + row;
+}
+
+$("#resultModal").on("hide.bs.modal", endGame);
